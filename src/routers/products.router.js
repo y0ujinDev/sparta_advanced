@@ -25,4 +25,14 @@ router.post(
   productsController.createProduct
 );
 
+// 상품 수정
+router.put(
+  "/:productId",
+  verifyToken,
+  authenticateUser,
+  checkProductOwner,
+  validateProductData,
+  productsController.updateProduct
+);
+
 export default router;

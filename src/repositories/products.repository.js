@@ -27,4 +27,18 @@ export class ProductsRepository {
       },
     });
   };
+
+  // 상품 수정
+  updateProduct = async (productId, title, content, status) => {
+    return await prisma.products.update({
+      where: {
+        id: +productId,
+      },
+      data: {
+        title,
+        content,
+        status,
+      },
+    });
+  };
 }

@@ -1,5 +1,9 @@
 import { ProductsRepository } from "../repositories/products.repository.js";
-import { ErrorMessages, StatusCodes } from "../utils/constants/constants.js";
+import {
+  ErrorMessages,
+  Status,
+  StatusCodes,
+} from "../utils/constants/constants.js";
 import { createError } from "../utils/errorResponse.js";
 
 export class ProductsService {
@@ -34,6 +38,26 @@ export class ProductsService {
       title,
       content
     );
+
+    return product;
+  };
+
+  // 상품 수정
+  updateProduct = async (productId, title, content, status) => {
+    const product = await this.productsRepository.updateProduct(
+      productId,
+      title,
+      content,
+      status
+    );
+
+    if (!product) {
+      throw createError(StatusCodes.NOT_FOUND, ErrorMessages.PRODUCT_NOT_FOUND);
+    }
+
+    if (status !== Status.SELLING && status !== Status.SOLD) {
+      throw createError(StatusCodes.BAD_REQUEST, ErrorMessages.INVALID_DATA);
+    }
 
     return product;
   };

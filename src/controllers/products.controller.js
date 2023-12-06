@@ -1,5 +1,5 @@
 import { ProductsService } from "../services/products.service.js";
-import { StatusCodes } from "../utils/constants/constants.js";
+import { StatusCodes, Status } from "../utils/constants/constants.js";
 
 export class ProductsController {
   productsService = new ProductsService();
@@ -39,6 +39,24 @@ export class ProductsController {
       );
 
       return res.status(StatusCodes.CREATED).json(product);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  // 상품 수정
+  updateProduct = async (req, res, next) => {
+    const { title, content, status = Status.SELLING } = req.body;
+    const { productId } = req.params;
+    try {
+      const product = await this.productsService.updateProduct(
+        productId,
+        title,
+        content,
+        status
+      );
+
+      return res.status(StatusCodes.OK).json(product);
     } catch (err) {
       next(err);
     }
