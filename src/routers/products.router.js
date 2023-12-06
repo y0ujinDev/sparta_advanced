@@ -6,6 +6,7 @@ import {
   authenticateUser,
 } from "../middlewares/validation/validateToken.middleware.js";
 import { checkProductOwner } from "./../middlewares/validation/checkProductOwner.middleware.js";
+import { checkProductExistence } from "../middlewares/validation/checkProductExistence.middleware.js";
 
 const router = express.Router();
 const productsController = new ProductsController();
@@ -14,7 +15,11 @@ const productsController = new ProductsController();
 router.get("/", productsController.getAllProducts);
 
 // 상품 상세 조회
-router.get("/:productId", productsController.getProductDetail);
+router.get(
+  "/:productId",
+  checkProductExistence,
+  productsController.getProductDetail
+);
 
 // 상품 등록
 router.post(
@@ -31,8 +36,19 @@ router.put(
   verifyToken,
   authenticateUser,
   checkProductOwner,
+  checkProductExistence,
   validateProductData,
   productsController.updateProduct
+);
+
+// 상품 삭제
+router.delete(
+  "/:productId",
+  verifyToken,
+  authenticateUser,
+  checkProductOwner,
+  checkProductExistence,
+  productsController.deleteProduct
 );
 
 export default router;

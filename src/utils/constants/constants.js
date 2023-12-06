@@ -52,4 +52,5 @@ export const SuccessMessages = Object.freeze({
   PRODUCT_UPDATED: "상품을 수정하였습니다.",
   PRODUCT_DELETED: "상품을 삭제하였습니다.",
   LOGIN_SUCCESS: "로그인에 성공했습니다.",
+  CHECK_USER_SUCCESS: "사용자 정보 조회에 성공했습니다.",
 });
