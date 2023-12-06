@@ -5,7 +5,7 @@ import validateLogin from "./../middlewares/validate/validateLogin.middleware.js
 import {
   verifyToken,
   authenticateUser,
-} from "./../middlewares/token.middleware.js";
+} from "../middlewares/validate/validateToken.middleware.js";
 
 const router = express.Router();
 const usersController = new UsersController();

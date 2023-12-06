@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import { prisma } from "../utils/prisma/index.js";
-import { StatusCodes, ErrorMessages } from "../utils/constants/constants.js";
-import { createError } from "../utils/errorResponse.js";
+import { prisma } from "../../utils/prisma/index.js";
+import { StatusCodes, ErrorMessages } from "../../utils/constants/constants.js";
+import { createError } from "../../utils/errorResponse.js";
 
 /// 토큰 유효성 검사
 export const verifyToken = (req, res, next) => {
