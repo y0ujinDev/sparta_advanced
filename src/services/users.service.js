@@ -69,7 +69,7 @@ export class UsersService {
     return { accessToken, expiresIn };
   };
 
-  // DB 교차 검사
+  // 로그인 처리
   handleLogin = async (email, password) => {
     const user = await this.usersRepository.findUserByEmail(email);
 

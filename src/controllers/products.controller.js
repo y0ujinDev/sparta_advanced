@@ -1,5 +1,9 @@
 import { ProductsService } from "../services/products.service.js";
-import { StatusCodes, Status } from "../utils/constants/constants.js";
+import {
+  StatusCodes,
+  Status,
+  SuccessMessages,
+} from "../utils/constants/constants.js";
 
 export class ProductsController {
   productsService = new ProductsService();
@@ -38,7 +42,10 @@ export class ProductsController {
         content
       );
 
-      return res.status(StatusCodes.CREATED).json(product);
+      return res.status(StatusCodes.CREATED).json({
+        message: SuccessMessages.PRODUCT_CREATED,
+        data: product,
+      });
     } catch (err) {
       next(err);
     }
@@ -56,7 +63,24 @@ export class ProductsController {
         status
       );
 
-      return res.status(StatusCodes.OK).json(product);
+      return res.status(StatusCodes.OK).json({
+        message: SuccessMessages.PRODUCT_UPDATED,
+        data: product,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  // 상품 삭제
+  deleteProduct = async (req, res, next) => {
+    const { productId } = req.params;
+    try {
+      await this.productsService.deleteProduct(productId);
+
+      return res.status(StatusCodes.OK).json({
+        message: SuccessMessages.PRODUCT_DELETED,
+      });
     } catch (err) {
       next(err);
     }

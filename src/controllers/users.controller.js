@@ -40,7 +40,7 @@ export class UsersController {
       const user = await this.usersSerivce.getUserInfo(res.locals.user.id);
 
       res.status(StatusCodes.OK).json({
-        message: SuccessMessages.LOGIN_SUCCESS,
+        message: SuccessMessages.CHECK_USER_SUCCESS,
         data: user,
       });
     } catch (err) {

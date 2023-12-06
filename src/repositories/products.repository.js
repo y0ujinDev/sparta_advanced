@@ -4,7 +4,11 @@ import { Status } from "../utils/constants/constants.js";
 export class ProductsRepository {
   // 전체 상품 목록 조회
   getAllProducts = async () => {
-    return await prisma.products.findMany();
+    return await prisma.products.findMany({
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
   };
 
   // 상품 상세 조회
@@ -38,6 +42,15 @@ export class ProductsRepository {
         title,
         content,
         status,
+      },
+    });
+  };
+
+  // 상품 삭제
+  deleteProduct = async (productId) => {
+    await prisma.products.delete({
+      where: {
+        id: +productId,
       },
     });
   };

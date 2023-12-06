@@ -24,10 +24,6 @@ export class ProductsService {
   getProductDetail = async (productId) => {
     const product = await this.productsRepository.getProductDetail(productId);
 
-    if (!product) {
-      throw createError(StatusCodes.NOT_FOUND, ErrorMessages.PRODUCT_NOT_FOUND);
-    }
-
     return product;
   };
 
@@ -51,14 +47,15 @@ export class ProductsService {
       status
     );
 
-    if (!product) {
-      throw createError(StatusCodes.NOT_FOUND, ErrorMessages.PRODUCT_NOT_FOUND);
-    }
-
     if (status !== Status.SELLING && status !== Status.SOLD) {
       throw createError(StatusCodes.BAD_REQUEST, ErrorMessages.INVALID_DATA);
     }
 
     return product;
+  };
+
+  // 상품 삭제
+  deleteProduct = async (productId) => {
+    await this.productsRepository.deleteProduct(productId);
   };
 }
