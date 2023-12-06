@@ -1,0 +1,21 @@
+{
+  "name": "sprata_advanced",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/app.js"
+  },
+  "packageManager": "yarn@3.3.0",
+  "dependencies": {
+    "@prisma/client": "^5.6.0",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "prisma": "^5.6.0"
+  }
+}
