@@ -5,7 +5,10 @@ const handleServerError = (err, req, res, next) => {
   console.error(err);
   const status = err.status || StatusCodes.INTERNAL_SERVER_ERROR;
   const message = err.message || ErrorMessages.SERVER_ERROR;
-  res.status(status).json({ error: { message } });
+  res.status(status).json({
+    success: false,
+    message: message,
+  });
 };
 
 export default handleServerError;
