@@ -13,4 +13,20 @@ export class ProductsController {
       next(err);
     }
   };
+
+  createProduct = async (req, res, next) => {
+    const { title, content } = req.body;
+    const userId = res.locals.user.id;
+    try {
+      const product = await this.productsService.createProduct(
+        userId,
+        title,
+        content
+      );
+
+      return res.status(StatusCodes.CREATED).json(product);
+    } catch (err) {
+      next(err);
+    }
+  };
 }

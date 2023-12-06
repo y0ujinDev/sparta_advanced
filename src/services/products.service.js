@@ -14,4 +14,14 @@ export class ProductsService {
 
     return products;
   };
+
+  createProduct = async (userId, title, content) => {
+    const product = await this.productsRepository.createProduct(
+      userId,
+      title,
+      content
+    );
+
+    return product;
+  };
 }

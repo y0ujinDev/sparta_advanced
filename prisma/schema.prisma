@@ -22,7 +22,7 @@ model Users {
 model Products {
   id        Int      @id @default(autoincrement()) @map("id")
   title     String   @map("title")
-  content   Int      @map("content")
+  content   String   @map("content")
   status    String   @default("FOR_SALE") @map("status")
   userId    Int      @map("userId")
   createdAt DateTime @default(now()) @map("createdAt")
