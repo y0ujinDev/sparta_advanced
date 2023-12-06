@@ -17,4 +17,18 @@ export class UsersController {
       next(error);
     }
   };
+
+  // 로그인
+  login = async (req, res, next) => {
+    const { email, password } = req.body;
+    try {
+      const user = await this.usersSerivce.login(email, password);
+      res.status(StatusCodes.OK).json({
+        message: SuccessMessages.LOGIN_SUCCESS,
+        data: user,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
