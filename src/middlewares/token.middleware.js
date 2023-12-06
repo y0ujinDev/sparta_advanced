@@ -1,6 +1,7 @@
-import { verify, TokenExpiredError, JsonWebTokenError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { prisma } from "../utils/prisma/index.js";
 import { StatusCodes, ErrorMessages } from "../utils/constants/constants.js";
+import { createError } from "../utils/errorResponse.js";
 
 /// 토큰 유효성 검사
 export const verifyToken = (req, res, next) => {
@@ -14,7 +15,11 @@ export const verifyToken = (req, res, next) => {
     }
 
     const token = authHeader.split(" ")[1];
-    const decoded = verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!decoded.userId) {
+      throw createError(StatusCodes.UNAUTHORIZED, ErrorMessages.INVALID_TOKEN);
+    }
 
     res.locals.decoded = decoded;
 
@@ -39,14 +44,19 @@ export const verifyToken = (req, res, next) => {
 // 사용자 유효성 검사
 export const authenticateUser = async (req, res, next) => {
   try {
+    const userId = res.locals.decoded.userId;
+    console.log(userId);
+
+    if (!userId) {
+      throw createError(StatusCodes.UNAUTHORIZED, ErrorMessages.MISSING_TOKEN);
+    }
+
     const user = await prisma.users.findUnique({
-      where: { id: res.locals.decoded.userId },
+      where: { id: +userId },
     });
+
     if (!user) {
-      return res.status(StatusCodes.UNAUTHORIZED).json({
-        success: false,
-        message: ErrorMessages.INVALID_USER,
-      });
+      throw createError(StatusCodes.UNAUTHORIZED, ErrorMessages.INVALID_USER);
     }
 
     res.locals.user = user;
