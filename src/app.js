@@ -1,7 +1,7 @@
 import express from "express";
 import router from "./routers/index.js";
 import LogMiddleware from "./middlewares/log.middleware.js";
-import handleServerError from "./middlewares/error-handling.middleware";
+import handleServerError from "./middlewares/error-handling.middleware.js";
 
 const app = express();
 const port = 3000;
