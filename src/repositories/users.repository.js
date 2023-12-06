@@ -14,11 +14,22 @@ export class UsersRepository {
     return user;
   };
 
-  // 사용자 찾기
+  // 이메일로 사용자 찾기
   findUserByEmail = async (email) => {
     const user = await prisma.users.findUnique({
       where: {
         email,
+      },
+    });
+
+    return user;
+  };
+
+  // 아이디로 사용자 찾기
+  findUserById = async (id) => {
+    const user = await prisma.users.findUnique({
+      where: {
+        id: +id,
       },
     });
 

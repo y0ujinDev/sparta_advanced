@@ -3,8 +3,6 @@ import { StatusCodes, ErrorMessages } from "../utils/constants/constants.js";
 import { createError } from "../utils/errorResponse.js";
 import { hashPassword, comparePassword } from "../utils/passwordUtils.js";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
 
 export class UsersService {
   usersRepository = new UsersRepository();
@@ -32,7 +30,7 @@ export class UsersService {
   // 사용자 로그인
   login = async (email, password) => {
     const user = await this.handleLogin(email, password);
-    const token = this.generateToken(user);
+    const token = this.generateToken(user.id);
 
     return {
       user: {
@@ -42,6 +40,14 @@ export class UsersService {
       },
       token,
     };
+  };
+
+  // 사용자 정보 조회
+  getUserInfo = async (userId) => {
+    const user = await this.usersRepository.findUserById(userId);
+    const { id, name, email } = user;
+
+    return { id, name, email };
   };
 
   // 토큰 생성
@@ -59,6 +65,7 @@ export class UsersService {
     const accessToken = jwt.sign({ userId }, secret, {
       expiresIn,
     });
+
     return { accessToken, expiresIn };
   };
 
