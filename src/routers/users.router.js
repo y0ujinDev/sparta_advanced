@@ -1,11 +1,11 @@
 import express from "express";
 import { UsersController } from "../controllers/users.controller.js";
-import validateSignup from "./../middlewares/validate/validateSignup.middleware.js";
-import validateLogin from "./../middlewares/validate/validateLogin.middleware.js";
+import validateSignup from "./../middlewares/validation/validateSignup.middleware.js";
+import validateLogin from "./../middlewares/validation/validateLogin.middleware.js";
 import {
   verifyToken,
   authenticateUser,
-} from "../middlewares/validate/validateToken.middleware.js";
+} from "../middlewares/validation/validateToken.middleware.js";
 
 const router = express.Router();
 const usersController = new UsersController();
