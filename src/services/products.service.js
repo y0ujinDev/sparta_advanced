@@ -13,11 +13,7 @@ export class ProductsService {
   getAllProducts = async () => {
     const products = await this.productsRepository.getAllProducts();
 
-    if (!products || products.length === 0) {
-      throw createError(StatusCodes.NOT_FOUND, ErrorMessages.PRODUCT_NOT_FOUND);
-    }
-
-    return products;
+    return products || [];
   };
 
   // 상품 상세 조회
