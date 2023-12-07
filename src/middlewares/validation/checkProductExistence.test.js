@@ -1,7 +1,7 @@
 import request from "supertest";
 import express from "express";
 import { checkProductExistence } from "./checkProductExistence.middleware.js";
-import handleServerError from "../../middlewares/error-handling.middleware.js";
+import handleServerError from "../error-handling.middleware.js";
 import { prisma } from "../../utils/prisma/index.js";
 
 jest.mock("../../utils/prisma/index.js", () => ({
