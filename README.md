@@ -24,7 +24,7 @@ yarn test
 
 # 개발 도구
 
-- Yarn, Nodemon, Jest, Supertest, Babel, Cross-env
+- Yarn, Nodemon, Jest, Cross-env
 
 # 주요 기능
 
