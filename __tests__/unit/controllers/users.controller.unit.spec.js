@@ -1,13 +1,14 @@
 import { UsersController } from "../../../src/controllers/users.controller";
 import {
   StatusCodes,
-  SuccessMessages,
+  SuccessMessages
 } from "../../../src/utils/constants/constants.js";
+import { jest } from "@jest/globals";
 
 let mockUsersService = {
   signUp: jest.fn(),
   login: jest.fn(),
-  getUserInfo: jest.fn(),
+  getUserInfo: jest.fn()
 };
 
 let usersController = new UsersController(mockUsersService);
@@ -16,7 +17,7 @@ describe("Users Controller Unit Test", () => {
   let mockRequest = {};
   let mockResponse = {
     status: jest.fn(() => mockResponse),
-    json: jest.fn(),
+    json: jest.fn()
   };
   let mockNext = jest.fn();
 
@@ -29,13 +30,13 @@ describe("Users Controller Unit Test", () => {
       id: 1,
       email: "test@test.com",
       password: "test",
-      name: "test",
+      name: "test"
     };
     mockUsersService.signUp.mockResolvedValue(mockUser);
     mockRequest.body = {
       email: "test@test.com",
       password: "test",
-      name: "test",
+      name: "test"
     };
 
     await usersController.signUp(mockRequest, mockResponse, mockNext);
@@ -43,7 +44,7 @@ describe("Users Controller Unit Test", () => {
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.CREATED);
     expect(mockResponse.json).toHaveBeenCalledWith({
       message: SuccessMessages.SIGNUP_SUCCESS,
-      data: mockUser,
+      data: mockUser
     });
   });
 
@@ -57,7 +58,7 @@ describe("Users Controller Unit Test", () => {
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(mockResponse.json).toHaveBeenCalledWith({
       message: SuccessMessages.LOGIN_SUCCESS,
-      data: mockUser,
+      data: mockUser
     });
   });
 
@@ -71,7 +72,7 @@ describe("Users Controller Unit Test", () => {
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(mockResponse.json).toHaveBeenCalledWith({
       message: SuccessMessages.CHECK_USER_SUCCESS,
-      data: mockUser,
+      data: mockUser
     });
   });
 });

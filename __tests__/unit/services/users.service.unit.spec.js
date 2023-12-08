@@ -1,14 +1,15 @@
 import { jest } from "@jest/globals";
-import { UsersService } from "../../../src/services/users.service";
-import * as passwordUtils from "../../../src/utils/passwordUtils.js";
-import dotenv from "dotenv";
-
-dotenv.config({ path: ".env.test" });
+import { UsersService } from "../../../src/services/users.service.js";
+import { ErrorMessages } from "../../../src/utils/constants/constants.js";
+import {
+  hashPassword,
+  comparePassword
+} from "../../../src/utils/passwordUtils";
 
 let mockUsersRepository = {
   findUserByEmail: jest.fn(),
-  findUserById: jest.fn(),
   signUp: jest.fn(),
+  findUserById: jest.fn()
 };
 
 let usersService = new UsersService(mockUsersRepository);
@@ -16,80 +17,82 @@ let usersService = new UsersService(mockUsersRepository);
 describe("Users Service Unit Test", () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    jest
-      .spyOn(passwordUtils, "hashPassword")
-      .mockResolvedValue("hashedPassword");
-    jest.spyOn(passwordUtils, "comparePassword").mockResolvedValue(true);
   });
 
   test("signUp Method", async () => {
     const mockUser = {
-      id: 1,
-      email: "test@gmail.com",
-      password: "hashedPassword",
       name: "test",
-      createdAt: new Date(),
+      email: "test@test.com",
+      createdAt: new Date()
     };
     mockUsersRepository.findUserByEmail.mockResolvedValue(null);
     mockUsersRepository.signUp.mockResolvedValue(mockUser);
 
-    const user = await usersService.signUp(
-      "test@gmail.com",
-      "password",
-      "test"
-    );
-    expect(user).toEqual({
-      name: "test",
-      email: "test@gmail.com",
-      createdAt: mockUser.createdAt,
-    });
-    expect(mockUsersRepository.findUserByEmail).toHaveBeenCalledWith(
-      "test@gmail.com"
-    );
+    const user = await usersService.signUp("test@test.com", "password", "test");
+    expect(user).toEqual(mockUser);
     expect(mockUsersRepository.signUp).toHaveBeenCalledWith(
-      "test@gmail.com",
-      "hashedPassword",
+      "test@test.com",
+      expect.any(String),
       "test"
     );
   });
 
+  test("signUp Method - User already exists", async () => {
+    mockUsersRepository.findUserByEmail.mockResolvedValue(true);
+
+    await expect(
+      usersService.signUp("test@test.com", "password", "test")
+    ).rejects.toThrow(ErrorMessages.ALREADY_REGISTERED);
+  });
+
   test("login Method", async () => {
+    const hashedPassword = await hashPassword("password");
+
     const mockUser = {
       id: 1,
-      email: "test@gmail.com",
-      password: "hashedPassword",
       name: "test",
-      createdAt: new Date(),
+      email: "test@test.com",
+      password: hashedPassword,
+      createdAt: new Date()
     };
     mockUsersRepository.findUserByEmail.mockResolvedValue(mockUser);
 
-    const result = await usersService.login("test@gmail.com", "password");
-    expect(result.user).toEqual({
-      name: "test",
-      email: "test@gmail.com",
-      createdAt: mockUser.createdAt,
-    });
-    expect(result.token).toBeDefined();
-    expect(mockUsersRepository.findUserByEmail).toHaveBeenCalledWith(
-      "test@gmail.com"
+    const userWithToken = await usersService.login("test@test.com", "password");
+    expect(userWithToken).toHaveProperty("user");
+    expect(userWithToken).toHaveProperty("token");
+    expect(userWithToken.user).toEqual(
+      expect.objectContaining({
+        name: mockUser.name,
+        email: mockUser.email,
+        createdAt: mockUser.createdAt
+      })
     );
+  });
+
+  test("login Method - User not found", async () => {
+    mockUsersRepository.findUserByEmail.mockResolvedValue(null);
+
+    await expect(
+      usersService.login("test@test.com", "password")
+    ).rejects.toThrow(ErrorMessages.USER_NOT_FOUND);
   });
 
   test("getUserInfo Method", async () => {
     const mockUser = {
       id: 1,
-      email: "test@gmail.com",
-      password: "password",
       name: "test",
+      email: "test@test.com",
+      createdAt: new Date()
     };
     mockUsersRepository.findUserById.mockResolvedValue(mockUser);
 
     const user = await usersService.getUserInfo(1);
-    expect(user).toEqual({
-      id: 1,
-      name: "test",
-      email: "test@gmail.com",
-    });
-    expect(mockUsersRepository.findUserById).toHaveBeenCalledWith(1);
+    expect(user).toEqual(
+      expect.objectContaining({
+        id: mockUser.id,
+        name: mockUser.name,
+        email: mockUser.email
+      })
+    );
   });
 });

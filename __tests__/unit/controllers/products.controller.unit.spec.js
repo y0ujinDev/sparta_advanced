@@ -1,15 +1,16 @@
 import { ProductsController } from "../../../src/controllers/products.controller";
 import {
   StatusCodes,
-  SuccessMessages,
+  SuccessMessages
 } from "../../../src/utils/constants/constants.js";
+import { jest } from "@jest/globals";
 
 let mockProductsService = {
   getAllProducts: jest.fn(),
   getProductDetail: jest.fn(),
   createProduct: jest.fn(),
   updateProduct: jest.fn(),
-  deleteProduct: jest.fn(),
+  deleteProduct: jest.fn()
 };
 
 let productsController = new ProductsController(mockProductsService);
@@ -18,7 +19,7 @@ describe("Products Controller Unit Test", () => {
   let mockRequest = {};
   let mockResponse = {
     status: jest.fn(() => mockResponse),
-    json: jest.fn(),
+    json: jest.fn()
   };
   let mockNext = jest.fn();
 
@@ -66,7 +67,7 @@ describe("Products Controller Unit Test", () => {
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.CREATED);
     expect(mockResponse.json).toHaveBeenCalledWith({
       message: SuccessMessages.PRODUCT_CREATED,
-      data: mockProduct,
+      data: mockProduct
     });
   });
 
@@ -75,13 +76,13 @@ describe("Products Controller Unit Test", () => {
       id: 1,
       title: "updated",
       content: "updated content",
-      status: "selling",
+      status: "selling"
     };
     mockProductsService.updateProduct.mockResolvedValue(mockProduct);
     mockRequest.body = {
       title: "updated",
       content: "updated content",
-      status: "selling",
+      status: "selling"
     };
     mockRequest.params = { productId: 1 };
 
@@ -90,7 +91,7 @@ describe("Products Controller Unit Test", () => {
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(mockResponse.json).toHaveBeenCalledWith({
       message: SuccessMessages.PRODUCT_UPDATED,
-      data: mockProduct,
+      data: mockProduct
     });
   });
 
@@ -102,7 +103,7 @@ describe("Products Controller Unit Test", () => {
 
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(mockResponse.json).toHaveBeenCalledWith({
-      message: SuccessMessages.PRODUCT_DELETED,
+      message: SuccessMessages.PRODUCT_DELETED
     });
   });
 });

@@ -1,8 +1,6 @@
 module.exports = {
   testPathIgnorePatterns: ["/node_modules/"],
-  transform: {
-    "^.+\\.js$": "babel-jest",
-  },
   transformIgnorePatterns: ["/node_modules/(?!@babel).+\\.js$"],
-  verbose: true,
+  setupFiles: ["<rootDir>/jest.setup.js"],
+  verbose: true
 };
