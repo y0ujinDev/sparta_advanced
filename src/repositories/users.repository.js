@@ -1,9 +1,11 @@
-import { prisma } from "../utils/prisma/index.js";
-
 export class UsersRepository {
+  constructor(prisma) {
+    this.prisma = prisma;
+  }
+
   // 회원가입
   signUp = async (email, password, name) => {
-    const user = await prisma.users.create({
+    const user = await this.prisma.users.create({
       data: {
         email,
         password,
@@ -16,7 +18,7 @@ export class UsersRepository {
 
   // 이메일로 사용자 찾기
   findUserByEmail = async (email) => {
-    const user = await prisma.users.findUnique({
+    const user = await this.prisma.users.findUnique({
       where: {
         email,
       },
@@ -27,7 +29,7 @@ export class UsersRepository {
 
   // 아이디로 사용자 찾기
   findUserById = async (id) => {
-    const user = await prisma.users.findUnique({
+    const user = await this.prisma.users.findUnique({
       where: {
         id: +id,
       },

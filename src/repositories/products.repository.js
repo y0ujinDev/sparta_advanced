@@ -1,10 +1,13 @@
-import { prisma } from "./../utils/prisma/index.js";
 import { Status } from "../utils/constants/constants.js";
 
 export class ProductsRepository {
+  constructor(prisma) {
+    this.prisma = prisma;
+  }
+
   // 전체 상품 목록 조회
   getAllProducts = async () => {
-    return await prisma.products.findMany({
+    return await this.prisma.products.findMany({
       orderBy: {
         updatedAt: "desc",
       },
@@ -13,7 +16,7 @@ export class ProductsRepository {
 
   // 상품 상세 조회
   getProductDetail = async (productId) => {
-    return await prisma.products.findUnique({
+    return await this.prisma.products.findUnique({
       where: {
         id: +productId,
       },
@@ -22,7 +25,7 @@ export class ProductsRepository {
 
   // 상품 등록
   createProduct = async (userId, title, content) => {
-    return await prisma.products.create({
+    return await this.prisma.products.create({
       data: {
         userId,
         title,
@@ -34,7 +37,7 @@ export class ProductsRepository {
 
   // 상품 수정
   updateProduct = async (productId, title, content, status) => {
-    return await prisma.products.update({
+    return await this.prisma.products.update({
       where: {
         id: +productId,
       },
@@ -48,7 +51,7 @@ export class ProductsRepository {
 
   // 상품 삭제
   deleteProduct = async (productId) => {
-    await prisma.products.delete({
+    await this.prisma.products.delete({
       where: {
         id: +productId,
       },

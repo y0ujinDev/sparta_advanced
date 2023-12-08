@@ -1,4 +1,3 @@
-import { ProductsRepository } from "../repositories/products.repository.js";
 import {
   ErrorMessages,
   Status,
@@ -7,7 +6,9 @@ import {
 import { createError } from "../utils/errorResponse.js";
 
 export class ProductsService {
-  productsRepository = new ProductsRepository();
+  constructor(productsRepository) {
+    this.productsRepository = productsRepository;
+  }
 
   // 전체 상품 목록 조회
   getAllProducts = async () => {

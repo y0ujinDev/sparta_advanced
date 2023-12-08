@@ -1,8 +1,9 @@
-import { UsersService } from "../services/users.service.js";
 import { StatusCodes, SuccessMessages } from "../utils/constants/constants.js";
 
 export class UsersController {
-  usersSerivce = new UsersService();
+  constructor(usersSerivce) {
+    this.usersSerivce = usersSerivce;
+  }
 
   // 회원가입
   signUp = async (req, res, next) => {

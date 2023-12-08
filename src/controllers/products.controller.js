@@ -1,4 +1,3 @@
-import { ProductsService } from "../services/products.service.js";
 import {
   StatusCodes,
   Status,
@@ -6,7 +5,9 @@ import {
 } from "../utils/constants/constants.js";
 
 export class ProductsController {
-  productsService = new ProductsService();
+  constructor(productsService) {
+    this.productsService = productsService;
+  }
 
   // 전체 상품 목록 조회
   getAllProducts = async (req, res, next) => {

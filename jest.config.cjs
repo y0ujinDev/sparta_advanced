@@ -1,5 +1,8 @@
 module.exports = {
+  testPathIgnorePatterns: ["/node_modules/"],
   transform: {
-    "^.+\\.jsx?$": ["babel-jest", { configFile: "./babel.config.cjs" }],
+    "^.+\\.js$": "babel-jest",
   },
+  transformIgnorePatterns: ["/node_modules/(?!@babel).+\\.js$"],
+  verbose: true,
 };

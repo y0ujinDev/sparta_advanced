@@ -1,11 +1,12 @@
-import { UsersRepository } from "../repositories/users.repository.js";
 import { StatusCodes, ErrorMessages } from "../utils/constants/constants.js";
 import { createError } from "../utils/errorResponse.js";
 import { hashPassword, comparePassword } from "../utils/passwordUtils.js";
 import jwt from "jsonwebtoken";
 
 export class UsersService {
-  usersRepository = new UsersRepository();
+  constructor(usersRepository) {
+    this.usersRepository = usersRepository;
+  }
 
   // 사용자 등록
   signUp = async (email, password, name) => {
