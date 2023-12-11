@@ -10,7 +10,7 @@ export const verifyToken = (req, res, next) => {
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         success: false,
-        message: ErrorMessages.MISSING_TOKEN,
+        message: ErrorMessages.MISSING_TOKEN
       });
     }
 
@@ -28,12 +28,12 @@ export const verifyToken = (req, res, next) => {
     if (err instanceof TokenExpiredError) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         success: false,
-        message: ErrorMessages.TOKEN_EXPIRED,
+        message: ErrorMessages.TOKEN_EXPIRED
       });
     } else if (err instanceof JsonWebTokenError) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         success: false,
-        message: ErrorMessages.TOKEN_VERIFICATION_FAILED,
+        message: ErrorMessages.TOKEN_VERIFICATION_FAILED
       });
     } else {
       next(err);
@@ -45,14 +45,13 @@ export const verifyToken = (req, res, next) => {
 export const authenticateUser = async (req, res, next) => {
   try {
     const userId = res.locals.decoded.userId;
-    console.log(userId);
 
     if (!userId) {
       throw createError(StatusCodes.UNAUTHORIZED, ErrorMessages.MISSING_TOKEN);
     }
 
     const user = await prisma.users.findUnique({
-      where: { id: +userId },
+      where: { id: +userId }
     });
 
     if (!user) {

@@ -1,12 +1,12 @@
 import express from "express";
 import { prisma } from "../utils/prisma/index.js";
 import { ProductsController } from "../controllers/products.controller.js";
-import { ProductsService } from "./../services/products.service.js";
-import { ProductsRepository } from "./../repositories/products.repository.js";
+import { ProductsService } from "../services/products.service.js";
+import { ProductsRepository } from "../repositories/products.repository.js";
 import { validateProductData } from "../middlewares/validation/validateProductData.middleware.js";
 import {
   verifyToken,
-  authenticateUser,
+  authenticateUser
 } from "../middlewares/validation/validateToken.middleware.js";
 import { checkProductOwner } from "./../middlewares/validation/checkProductOwner.middleware.js";
 import { checkProductExistence } from "../middlewares/validation/checkProductExistence.middleware.js";
@@ -40,8 +40,8 @@ router.put(
   "/:productId",
   verifyToken,
   authenticateUser,
-  checkProductOwner,
   checkProductExistence,
+  checkProductOwner,
   validateProductData,
   productsController.updateProduct
 );
@@ -51,8 +51,8 @@ router.delete(
   "/:productId",
   verifyToken,
   authenticateUser,
-  checkProductOwner,
   checkProductExistence,
+  checkProductOwner,
   productsController.deleteProduct
 );
 

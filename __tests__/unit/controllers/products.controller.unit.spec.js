@@ -1,8 +1,5 @@
 import { ProductsController } from "../../../src/controllers/products.controller";
-import {
-  StatusCodes,
-  SuccessMessages
-} from "../../../src/utils/constants/constants.js";
+import { StatusCodes } from "../../../src/utils/constants/constants.js";
 import { jest } from "@jest/globals";
 
 let mockProductsService = {
@@ -38,7 +35,10 @@ describe("Products Controller Unit Test", () => {
     );
 
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.OK);
-    expect(mockResponse.json).toHaveBeenCalledWith(mockProducts);
+    expect(mockResponse.json).toHaveBeenCalledWith({
+      data: mockProducts,
+      message: "상품 목록 조회에 성공했습니다."
+    });
   });
 
   test("getProductDetail Method", async () => {
@@ -53,7 +53,10 @@ describe("Products Controller Unit Test", () => {
     );
 
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.OK);
-    expect(mockResponse.json).toHaveBeenCalledWith(mockProduct);
+    expect(mockResponse.json).toHaveBeenCalledWith({
+      data: mockProduct,
+      message: "상품 상세 조회에 성공했습니다."
+    });
   });
 
   test("createProduct Method", async () => {
@@ -66,7 +69,7 @@ describe("Products Controller Unit Test", () => {
 
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.CREATED);
     expect(mockResponse.json).toHaveBeenCalledWith({
-      message: SuccessMessages.PRODUCT_CREATED,
+      message: "상품이 등록되었습니다.",
       data: mockProduct
     });
   });
@@ -90,7 +93,7 @@ describe("Products Controller Unit Test", () => {
 
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(mockResponse.json).toHaveBeenCalledWith({
-      message: SuccessMessages.PRODUCT_UPDATED,
+      message: "상품이 수정되었습니다.",
       data: mockProduct
     });
   });
@@ -103,7 +106,7 @@ describe("Products Controller Unit Test", () => {
 
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(mockResponse.json).toHaveBeenCalledWith({
-      message: SuccessMessages.PRODUCT_DELETED
+      message: "상품이 삭제되었습니다."
     });
   });
 });

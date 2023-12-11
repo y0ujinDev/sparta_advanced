@@ -1,8 +1,5 @@
 import { UsersController } from "../../../src/controllers/users.controller";
-import {
-  StatusCodes,
-  SuccessMessages
-} from "../../../src/utils/constants/constants.js";
+import { StatusCodes } from "../../../src/utils/constants/constants.js";
 import { jest } from "@jest/globals";
 
 let mockUsersService = {
@@ -43,7 +40,7 @@ describe("Users Controller Unit Test", () => {
 
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.CREATED);
     expect(mockResponse.json).toHaveBeenCalledWith({
-      message: SuccessMessages.SIGNUP_SUCCESS,
+      message: "회원가입에 성공했습니다.",
       data: mockUser
     });
   });
@@ -57,7 +54,7 @@ describe("Users Controller Unit Test", () => {
 
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(mockResponse.json).toHaveBeenCalledWith({
-      message: SuccessMessages.LOGIN_SUCCESS,
+      message: "로그인에 성공했습니다.",
       data: mockUser
     });
   });
@@ -71,7 +68,7 @@ describe("Users Controller Unit Test", () => {
 
     expect(mockResponse.status).toHaveBeenCalledWith(StatusCodes.OK);
     expect(mockResponse.json).toHaveBeenCalledWith({
-      message: SuccessMessages.CHECK_USER_SUCCESS,
+      message: "사용자 정보 조회에 성공했습니다.",
       data: mockUser
     });
   });
