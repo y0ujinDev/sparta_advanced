@@ -8,7 +8,7 @@ import {
 
 let mockUsersRepository = {
   findUserByEmail: jest.fn(),
-  signUp: jest.fn(),
+  createUser: jest.fn(),
   findUserById: jest.fn()
 };
 
@@ -26,11 +26,11 @@ describe("Users Service Unit Test", () => {
       createdAt: new Date()
     };
     mockUsersRepository.findUserByEmail.mockResolvedValue(null);
-    mockUsersRepository.signUp.mockResolvedValue(mockUser);
+    mockUsersRepository.createUser.mockResolvedValue(mockUser);
 
     const user = await usersService.signUp("test@test.com", "password", "test");
     expect(user).toEqual(mockUser);
-    expect(mockUsersRepository.signUp).toHaveBeenCalledWith(
+    expect(mockUsersRepository.createUser).toHaveBeenCalledWith(
       "test@test.com",
       expect.any(String),
       "test"

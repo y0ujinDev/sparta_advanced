@@ -6,22 +6,12 @@ export const StatusCodes = Object.freeze({
   FORBIDDEN: 403,
   NOT_FOUND: 404,
   CONFLICT: 409,
-  INTERNAL_SERVER_ERROR: 500,
+  INTERNAL_SERVER_ERROR: 500
 });
-
-export const productAttributes = Object.freeze([
-  "id",
-  "userId",
-  "title",
-  "content",
-  "status",
-  "createdAt",
-  "updatedAt",
-]);
 
 export const Status = Object.freeze({
   SELLING: "FOR_SALE",
-  SOLD: "SOLD_OUT",
+  SOLD: "SOLD_OUT"
 });
 
 export const ErrorMessages = Object.freeze({
@@ -43,14 +33,9 @@ export const ErrorMessages = Object.freeze({
   INVALID_USER: "유효한 사용자가 아닙니다.",
   TOKEN_EXPIRED: "토큰의 유효기간이 지났습니다.",
   TOKEN_VERIFICATION_FAILED: "토큰 검증에 실패하였습니다.",
-  NO_SECRET_KEY: "JWT_SECRET 키가 존재하지 않습니다.",
+  NO_SECRET_KEY: "JWT_SECRET 키가 존재하지 않습니다."
 });
 
-export const SuccessMessages = Object.freeze({
-  SIGNUP_SUCCESS: "회원가입에 성공했습니다.",
-  PRODUCT_CREATED: "판매 상품을 등록하였습니다.",
-  PRODUCT_UPDATED: "상품을 수정하였습니다.",
-  PRODUCT_DELETED: "상품을 삭제하였습니다.",
-  LOGIN_SUCCESS: "로그인에 성공했습니다.",
-  CHECK_USER_SUCCESS: "사용자 정보 조회에 성공했습니다.",
+export const TokenInfo = Object.freeze({
+  EXPIRATION_TIME: "12h"
 });

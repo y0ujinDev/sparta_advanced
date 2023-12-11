@@ -6,20 +6,20 @@ export class ProductsRepository {
   }
 
   // 전체 상품 목록 조회
-  getAllProducts = async () => {
+  findAllProducts = async () => {
     return await this.prisma.products.findMany({
       orderBy: {
-        updatedAt: "desc",
-      },
+        updatedAt: "desc"
+      }
     });
   };
 
   // 상품 상세 조회
-  getProductDetail = async (productId) => {
+  findProductById = async productId => {
     return await this.prisma.products.findUnique({
       where: {
-        id: +productId,
-      },
+        id: +productId
+      }
     });
   };
 
@@ -30,8 +30,8 @@ export class ProductsRepository {
         userId,
         title,
         content,
-        status: Status.SELLING,
-      },
+        status: Status.SELLING
+      }
     });
   };
 
@@ -39,22 +39,22 @@ export class ProductsRepository {
   updateProduct = async (productId, title, content, status) => {
     return await this.prisma.products.update({
       where: {
-        id: +productId,
+        id: +productId
       },
       data: {
         title,
         content,
-        status,
-      },
+        status
+      }
     });
   };
 
   // 상품 삭제
-  deleteProduct = async (productId) => {
+  deleteProduct = async productId => {
     await this.prisma.products.delete({
       where: {
-        id: +productId,
-      },
+        id: +productId
+      }
     });
   };
 }

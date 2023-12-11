@@ -8,25 +8,25 @@ datasource db {
 }
 
 model Users {
-  id        Int        @id @default(autoincrement()) @map("id")
-  email     String     @unique @map("email")
-  password  String     @map("password")
-  name      String     @map("name")
-  createdAt DateTime   @default(now()) @map("createdAt")
-  updatedAt DateTime   @updatedAt @map("updatedAt")
+  id        Int        @id @default(autoincrement())
+  email     String
+  password  String
+  name      String
+  createdAt DateTime
+  updatedAt DateTime
   products  Products[]
 
   @@map("Users")
 }
 
 model Products {
-  id        Int      @id @default(autoincrement()) @map("id")
-  title     String   @map("title")
-  content   String   @map("content")
-  status    String   @default("FOR_SALE") @map("status")
-  userId    Int      @map("userId")
-  createdAt DateTime @default(now()) @map("createdAt")
-  updatedAt DateTime @updatedAt @map("updatedAt")
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  status    String   @default("FOR_SALE")
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   user      Users    @relation(fields: [userId], references: [id])
 
   @@map("Products")

@@ -4,8 +4,8 @@ import { UsersRepository } from "../../../src/repositories/users.repository";
 let mockPrisma = {
   users: {
     create: jest.fn(),
-    findUnique: jest.fn(),
-  },
+    findUnique: jest.fn()
+  }
 };
 
 let usersRepository = new UsersRepository(mockPrisma);
@@ -20,11 +20,11 @@ describe("Users Repository Unit Test", () => {
       id: 1,
       email: "test@gmail.com",
       password: "password",
-      name: "test",
+      name: "test"
     };
     mockPrisma.users.create.mockResolvedValue(mockUser);
 
-    const user = await usersRepository.signUp(
+    const user = await usersRepository.createUser(
       "test@gmail.com",
       "password",
       "test"
@@ -38,14 +38,14 @@ describe("Users Repository Unit Test", () => {
       id: 1,
       email: "test@gmail.com",
       password: "password",
-      name: "test",
+      name: "test"
     };
     mockPrisma.users.findUnique.mockResolvedValue(mockUser);
 
     const user = await usersRepository.findUserByEmail("test@gmail.com");
     expect(user).toEqual(mockUser);
     expect(mockPrisma.users.findUnique).toHaveBeenCalledWith({
-      where: { email: "test@gmail.com" },
+      where: { email: "test@gmail.com" }
     });
   });
 
@@ -54,14 +54,14 @@ describe("Users Repository Unit Test", () => {
       id: 1,
       email: "test@gmail.com",
       password: "password",
-      name: "test",
+      name: "test"
     };
     mockPrisma.users.findUnique.mockResolvedValue(mockUser);
 
     const user = await usersRepository.findUserById(1);
     expect(user).toEqual(mockUser);
     expect(mockPrisma.users.findUnique).toHaveBeenCalledWith({
-      where: { id: 1 },
+      where: { id: 1 }
     });
   });
 });

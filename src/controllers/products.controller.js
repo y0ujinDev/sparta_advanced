@@ -1,8 +1,4 @@
-import {
-  StatusCodes,
-  Status,
-  SuccessMessages,
-} from "../utils/constants/constants.js";
+import { StatusCodes, Status } from "../utils/constants/constants.js";
 
 export class ProductsController {
   constructor(productsService) {
@@ -14,7 +10,10 @@ export class ProductsController {
     try {
       const products = await this.productsService.getAllProducts();
 
-      return res.status(StatusCodes.OK).json(products);
+      return res.status(StatusCodes.OK).json({
+        message: "상품 목록 조회에 성공했습니다.",
+        data: products
+      });
     } catch (err) {
       next(err);
     }
@@ -26,7 +25,10 @@ export class ProductsController {
     try {
       const product = await this.productsService.getProductDetail(productId);
 
-      return res.status(StatusCodes.OK).json(product);
+      return res.status(StatusCodes.OK).json({
+        message: "상품 상세 조회에 성공했습니다.",
+        data: product
+      });
     } catch (err) {
       next(err);
     }
@@ -44,8 +46,8 @@ export class ProductsController {
       );
 
       return res.status(StatusCodes.CREATED).json({
-        message: SuccessMessages.PRODUCT_CREATED,
-        data: product,
+        message: "상품이 등록되었습니다.",
+        data: product
       });
     } catch (err) {
       next(err);
@@ -65,8 +67,8 @@ export class ProductsController {
       );
 
       return res.status(StatusCodes.OK).json({
-        message: SuccessMessages.PRODUCT_UPDATED,
-        data: product,
+        message: "상품이 수정되었습니다.",
+        data: product
       });
     } catch (err) {
       next(err);
@@ -80,7 +82,7 @@ export class ProductsController {
       await this.productsService.deleteProduct(productId);
 
       return res.status(StatusCodes.OK).json({
-        message: SuccessMessages.PRODUCT_DELETED,
+        message: "상품이 삭제되었습니다."
       });
     } catch (err) {
       next(err);

@@ -1,7 +1,7 @@
 import {
   ErrorMessages,
   Status,
-  StatusCodes,
+  StatusCodes
 } from "../utils/constants/constants.js";
 import { createError } from "../utils/errorResponse.js";
 
@@ -12,14 +12,14 @@ export class ProductsService {
 
   // 전체 상품 목록 조회
   getAllProducts = async () => {
-    const products = await this.productsRepository.getAllProducts();
+    const products = await this.productsRepository.findAllProducts();
 
     return products || [];
   };
 
   // 상품 상세 조회
-  getProductDetail = async (productId) => {
-    const product = await this.productsRepository.getProductDetail(productId);
+  getProductDetail = async productId => {
+    const product = await this.productsRepository.findProductById(productId);
 
     return product;
   };
@@ -52,7 +52,7 @@ export class ProductsService {
   };
 
   // 상품 삭제
-  deleteProduct = async (productId) => {
+  deleteProduct = async productId => {
     await this.productsRepository.deleteProduct(productId);
   };
 }

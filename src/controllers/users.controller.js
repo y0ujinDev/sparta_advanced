@@ -1,4 +1,4 @@
-import { StatusCodes, SuccessMessages } from "../utils/constants/constants.js";
+import { StatusCodes } from "../utils/constants/constants.js";
 
 export class UsersController {
   constructor(usersSerivce) {
@@ -12,8 +12,8 @@ export class UsersController {
       const user = await this.usersSerivce.signUp(email, password, name);
 
       res.status(StatusCodes.CREATED).json({
-        message: SuccessMessages.SIGNUP_SUCCESS,
-        data: user,
+        message: "회원가입에 성공했습니다.",
+        data: user
       });
     } catch (error) {
       next(error);
@@ -27,8 +27,8 @@ export class UsersController {
       const user = await this.usersSerivce.login(email, password);
 
       res.status(StatusCodes.OK).json({
-        message: SuccessMessages.LOGIN_SUCCESS,
-        data: user,
+        message: "로그인에 성공했습니다.",
+        data: user
       });
     } catch (err) {
       next(err);
@@ -41,8 +41,8 @@ export class UsersController {
       const user = await this.usersSerivce.getUserInfo(res.locals.user.id);
 
       res.status(StatusCodes.OK).json({
-        message: SuccessMessages.CHECK_USER_SUCCESS,
-        data: user,
+        message: "사용자 정보 조회에 성공했습니다.",
+        data: user
       });
     } catch (err) {
       next(err);

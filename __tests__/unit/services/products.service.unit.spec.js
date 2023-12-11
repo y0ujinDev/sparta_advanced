@@ -3,11 +3,11 @@ import { ProductsService } from "../../../src/services/products.service";
 import { Status } from "../../../src/utils/constants/constants.js";
 
 let mockProductsRepository = {
-  getAllProducts: jest.fn(),
-  getProductDetail: jest.fn(),
+  findAllProducts: jest.fn(),
+  findProductById: jest.fn(),
   createProduct: jest.fn(),
   updateProduct: jest.fn(),
-  deleteProduct: jest.fn(),
+  deleteProduct: jest.fn()
 };
 
 let productsService = new ProductsService(mockProductsRepository);
@@ -19,20 +19,20 @@ describe("Products Service Unit Test", () => {
 
   test("getAllProducts Method", async () => {
     const mockProducts = [{ id: 1, title: "test product" }];
-    mockProductsRepository.getAllProducts.mockResolvedValue(mockProducts);
+    mockProductsRepository.findAllProducts.mockResolvedValue(mockProducts);
 
     const products = await productsService.getAllProducts();
     expect(products).toEqual(mockProducts);
-    expect(mockProductsRepository.getAllProducts).toHaveBeenCalled();
+    expect(mockProductsRepository.findAllProducts).toHaveBeenCalled();
   });
 
   test("getProductDetail Method", async () => {
     const mockProduct = { id: 1, title: "test product" };
-    mockProductsRepository.getProductDetail.mockResolvedValue(mockProduct);
+    mockProductsRepository.findProductById.mockResolvedValue(mockProduct);
 
     const product = await productsService.getProductDetail(1);
     expect(product).toEqual(mockProduct);
-    expect(mockProductsRepository.getProductDetail).toHaveBeenCalledWith(1);
+    expect(mockProductsRepository.findProductById).toHaveBeenCalledWith(1);
   });
 
   test("createProduct Method", async () => {
@@ -40,7 +40,7 @@ describe("Products Service Unit Test", () => {
       id: 1,
       title: "test product",
       userId: 1,
-      content: "test content",
+      content: "test content"
     };
     mockProductsRepository.createProduct.mockResolvedValue(mockProduct);
 
@@ -62,7 +62,7 @@ describe("Products Service Unit Test", () => {
       id: 1,
       title: "updated product",
       content: "updated content",
-      status: Status.SELLING,
+      status: Status.SELLING
     };
     mockProductsRepository.updateProduct.mockResolvedValue(mockProduct);
 

@@ -3,11 +3,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "yarn nodemon src/app.js",
-    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.cjs --forceExit",
-    "test:silent": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.cjs --silent --forceExit",
-    "test:coverage": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.cjs --coverage --forceExit",
-    "test:unit": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.cjs __tests__/unit --forceExit"
+    "dev": "nodemon src/app.js",
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.json --forceExit",
+    "test:silent": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.json --silent --forceExit",
+    "test:coverage": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.json --coverage --forceExit",
+    "test:unit": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.json __tests__/unit --forceExit"
   },
   "packageManager": "yarn@3.3.0",
   "dependencies": {

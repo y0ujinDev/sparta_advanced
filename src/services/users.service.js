@@ -1,4 +1,8 @@
-import { StatusCodes, ErrorMessages } from "../utils/constants/constants.js";
+import {
+  StatusCodes,
+  ErrorMessages,
+  TokenInfo
+} from "../utils/constants/constants.js";
 import { createError } from "../utils/errorResponse.js";
 import { hashPassword, comparePassword } from "../utils/passwordUtils.js";
 import jwt from "jsonwebtoken";
@@ -19,12 +23,16 @@ export class UsersService {
 
     const hashedPassword = await hashPassword(password);
 
-    const user = await this.usersRepository.signUp(email, hashedPassword, name);
+    const user = await this.usersRepository.createUser(
+      email,
+      hashedPassword,
+      name
+    );
 
     return {
       name: user.name,
       email: user.email,
-      createdAt: user.createdAt,
+      createdAt: user.createdAt
     };
   };
 
@@ -37,14 +45,14 @@ export class UsersService {
       user: {
         name: user.name,
         email: user.email,
-        createdAt: user.createdAt,
+        createdAt: user.createdAt
       },
-      token,
+      token
     };
   };
 
   // 사용자 정보 조회
-  getUserInfo = async (userId) => {
+  getUserInfo = async userId => {
     const user = await this.usersRepository.findUserById(userId);
     const { id, name, email } = user;
 
@@ -52,8 +60,8 @@ export class UsersService {
   };
 
   // 토큰 생성
-  generateToken = (userId) => {
-    const expiresIn = "12h";
+  generateToken = userId => {
+    const expiresIn = TokenInfo.EXPIRATION_TIME;
     const secret = process.env.JWT_SECRET;
 
     if (!secret) {
@@ -64,7 +72,7 @@ export class UsersService {
     }
 
     const accessToken = jwt.sign({ userId }, secret, {
-      expiresIn,
+      expiresIn
     });
 
     return { accessToken, expiresIn };

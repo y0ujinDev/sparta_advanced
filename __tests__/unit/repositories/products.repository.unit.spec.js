@@ -7,8 +7,8 @@ let mockPrisma = {
     findUnique: jest.fn(),
     create: jest.fn(),
     update: jest.fn(),
-    delete: jest.fn(),
-  },
+    delete: jest.fn()
+  }
 };
 
 let productsRepository = new ProductsRepository(mockPrisma);
@@ -22,7 +22,7 @@ describe("Products Repository Unit Test", () => {
     const mockProducts = [{ id: 1, title: "test product" }];
     mockPrisma.products.findMany.mockResolvedValue(mockProducts);
 
-    const products = await productsRepository.getAllProducts();
+    const products = await productsRepository.findAllProducts();
     expect(products).toEqual(mockProducts);
     expect(mockPrisma.products.findMany).toHaveBeenCalled();
   });
@@ -31,10 +31,10 @@ describe("Products Repository Unit Test", () => {
     const mockProduct = { id: 1, title: "test product" };
     mockPrisma.products.findUnique.mockResolvedValue(mockProduct);
 
-    const product = await productsRepository.getProductDetail(1);
+    const product = await productsRepository.findProductById(1);
     expect(product).toEqual(mockProduct);
     expect(mockPrisma.products.findUnique).toHaveBeenCalledWith({
-      where: { id: 1 },
+      where: { id: 1 }
     });
   });
 
@@ -43,7 +43,7 @@ describe("Products Repository Unit Test", () => {
       id: 1,
       title: "test product",
       userId: 1,
-      content: "test content",
+      content: "test content"
     };
     mockPrisma.products.create.mockResolvedValue(mockProduct);
 
@@ -61,7 +61,7 @@ describe("Products Repository Unit Test", () => {
       id: 1,
       title: "updated product",
       content: "updated content",
-      status: "FOR_SALE",
+      status: "FOR_SALE"
     };
     mockPrisma.products.update.mockResolvedValue(mockProduct);
 
@@ -77,8 +77,8 @@ describe("Products Repository Unit Test", () => {
       data: {
         title: "updated product",
         content: "updated content",
-        status: "FOR_SALE",
-      },
+        status: "FOR_SALE"
+      }
     });
   });
 
@@ -87,7 +87,7 @@ describe("Products Repository Unit Test", () => {
 
     await productsRepository.deleteProduct(1);
     expect(mockPrisma.products.delete).toHaveBeenCalledWith({
-      where: { id: 1 },
+      where: { id: 1 }
     });
   });
 });

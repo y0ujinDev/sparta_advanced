@@ -6,20 +6,12 @@ import { StatusCodes, ErrorMessages } from "../../utils/constants/constants.js";
 export const checkProductOwner = async (req, res, next) => {
   const id = req.params.productId;
   const userId = res.locals.user.id;
-  const product = await prisma.products.findUnique({
-    where: {
-      id: +id,
-      userId: +userId,
-    },
-  });
 
-  if (!product) {
+  if (!product || product.userId !== +userId) {
     return next(
       createError(StatusCodes.FORBIDDEN, ErrorMessages.NO_PRODUCT_ACCESS)
     );
   }
-
-  req.product = product;
 
   next();
 };
